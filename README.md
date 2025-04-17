@@ -16,7 +16,7 @@
 
 ## Screenshot
 
-*Insert a screenshot here showing the chameleon with weather overlay*
+![Screenshot](./ChameleonWeather.png)
 
 ---
 
