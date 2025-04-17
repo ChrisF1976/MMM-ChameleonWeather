@@ -1,0 +1,37 @@
+{
+    "Rain": [
+        "Schon wieder Regen? Hat der Himmel keine anderen Ideen?",
+        "Vergiss deinen Regenschirm nicht!",
+        "Regen: Perfekt für einen Netflix-Tag!",
+        "Wie wäre es mit einem Boot statt einem Auto?",
+        "Regen, Regen, geh weg, komm wieder an einem anderen Tag!"
+    ],
+    "Clear": [
+        "Sonnenschein! Genieße es, solange es hält.",
+        "Perfektes Wetter für einen Spaziergang!",
+        "Die Sonne scheint. Vergiss die Sonnencreme nicht!",
+        "Ein perfekter Tag, um faul in der Sonne zu liegen.",
+        "Endlich Sonne! Zeit für ein Eis."
+    ],
+    "Clouds": [
+        "Wolken... passt zu meiner Montagslaune.",
+        "Wo ist die Sonne? Wahrscheinlich in Urlaub.",
+        "Grauer Himmel... Wie inspirierend!",
+        "Wolken: Die Tarnung der Sonne.",
+        "Immer noch keine Sonne? Typisch."
+    ],
+    "Snow": [
+        "Zeit für eine Schneeballschlacht!",
+        "Schnee: Die schönste Unannehmlichkeit.",
+        "Hoffentlich hast du eine Schaufel parat!",
+        "Es ist Winterwunderland-Zeit!",
+        "Schnee: Perfekt für heiße Schokolade und Kuscheldecken."
+    ],
+    "Extreme": [
+        "Bleib sicher, das Wetter ist wild!",
+        "Unwetterwarnung! Halte dich fest!",
+        "Sieht aus, als hätte Mutter Natur einen schlechten Tag.",
+        "Vorsicht: Das Wetter hat heute keine gute Laune.",
+        "Extremwetter: Bleib lieber drinnen."
+    ]
+}

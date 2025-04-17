@@ -1,0 +1,37 @@
+{
+    "Rain": [
+        "Rain again? Someone up there needs a new hobby.",
+        "Don't forget your umbrella!",
+        "Rain: Nature's way of saying 'Netflix day!'",
+        "It's wet outside. Might as well stay in.",
+        "Rain, rain, go away... but maybe come back tomorrow?"
+    ],
+    "Clear": [
+        "Sunny skies! Enjoy it while it lasts.",
+        "Perfect day for a walk!",
+        "The sun is out. Don’t forget sunscreen!",
+        "Finally, some good weather. Time for ice cream!",
+        "Blue skies. Who needs a vacation when it’s like this?"
+    ],
+    "Clouds": [
+        "Cloudy with a chance of yawns.",
+        "Where’s the sun? Taking a break, I guess.",
+        "Gray skies ahead, like your Monday mood.",
+        "The clouds are here to stay, apparently.",
+        "Looks like the sun is on strike."
+    ],
+    "Snow": [
+        "Snowball fight incoming!",
+        "Snow: The prettiest inconvenience.",
+        "Grab your shovel and your sense of humor.",
+        "Winter wonderland time!",
+        "Snow means hot cocoa and blankets, right?"
+    ],
+    "Extreme": [
+        "Stay safe out there, the weather’s wild!",
+        "Extreme weather alert! Hold onto your hats.",
+        "Looks like Mother Nature’s in a mood.",
+        "Buckle up, it’s going to be a bumpy ride.",
+        "Extreme weather: perfect excuse to stay indoors."
+    ]
+}

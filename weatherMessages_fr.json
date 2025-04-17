@@ -1,0 +1,37 @@
+{
+    "Rain": [
+        "Encore de la pluie ? Le ciel manque d'inspiration ?",
+        "N'oublie pas ton parapluie !",
+        "Pluie : Parfait pour une journée Netflix !",
+        "La pluie : un rappel que le soleil ne brille pas toujours.",
+        "Mieux vaut être mouillé que gelé, non ?"
+    ],
+    "Clear": [
+        "Du soleil ! Profites-en tant que ça dure.",
+        "Un temps parfait pour une promenade !",
+        "Le soleil brille. N'oublie pas la crème solaire !",
+        "Enfin une journée sans nuages !",
+        "Parfait pour un pique-nique en plein air."
+    ],
+    "Clouds": [
+        "Nuages... Parfait pour rester au lit.",
+        "Où est le soleil ? Probablement en vacances.",
+        "Ciel gris... Ça reflète l'humeur de lundi.",
+        "Les nuages cachent les étoiles ce soir.",
+        "Encore des nuages ? Pas de surprise."
+    ],
+    "Snow": [
+        "Bataille de boules de neige à venir !",
+        "Neige : L'inconvénient le plus joli.",
+        "Prêt à pelleter ou à faire du ski ?",
+        "C'est l'heure du chocolat chaud et des couvertures.",
+        "La neige tombe, et tout devient magique."
+    ],
+    "Extreme": [
+        "Reste prudent, le temps est fou !",
+        "Alerte météo extrême ! Accroche-toi !",
+        "On dirait que Mère Nature n'est pas contente.",
+        "Vérifie deux fois avant de sortir.",
+        "Temps extrême : reste bien au chaud."
+    ]
+}

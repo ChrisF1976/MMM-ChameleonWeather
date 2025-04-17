@@ -1,0 +1,63 @@
+/* Wrapper for the module */
+.chameleon-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chameleon main image */
+.chameleon-image {
+  max-width: 100%; /* Ensure the image scales to fit the width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove inline gaps */
+  z-index: 1; /* Placed 1st layer */
+  margin-left: auto; /* This ensures the image is aligned to the right */
+
+}
+
+/* Weather overlay */
+.weather-overlay {
+  position: absolute;
+  opacity: 0.8;
+  bottom: 10px; /* Margin-bottom for placement adjustment */
+  left: 60px; /* Margin-left for placement adjustment */
+  width: 50%; /* Control the size of the overlay */
+  z-index: 2; /* Place above the main image */
+}
+
+/* Style for the temperature display */
+.temperature-display {
+  position: absolute;
+  bottom: 45px; /* Adjust to position near the overlay */
+  /*left: 0px; /* Adjust to position in the lower left corner */
+  text-align: left;
+  font-size: 40px; /* Adjust font size */
+  color: #ffffff; /* Adjust text color */
+  z-index: 3; /* Ensure it appears above the overlay */
+}
+
+/* Weather Whiner Message */
+.weather-whiner {
+  position: absolute;
+  bottom: 0px; /* Place at the bottom of the wrapper */
+  left: 0px; /* Offset from the left */
+  width: calc(100% - 0px); /* Fit within the wrapper, accounting for padding */
+  color: #ffffff; /* White text color */
+ /* background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  font-size: 20px; /* Adjust font size as needed */
+  padding: 0px; /* Add some spacing around the text */
+  /* border-radius: 5px; /* Slight rounding for a clean look */
+  z-index: 3; /* Ensure it appears above other elements */
+  text-align: left; /* Center the text */
+  white-space: nowrap;       /* Prevent wrapping */
+  overflow: hidden;          /* Hide overflow if any (optional) */
+  /*
+  display: flex;
+  justify-content: flex-start;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  */
+}
