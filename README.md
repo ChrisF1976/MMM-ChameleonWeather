@@ -38,20 +38,23 @@ Add the module to your config.js file:
     apiKey: "YOUR_OPENWEATHERMAP_API_KEY",
     lat: "YOUR_LATITUDE",
     lon: "YOUR_LONGITUDE",
-    units: "metric", // or "imperial"
-    updateInterval: 5 * 60 * 1000, // every 5 minutes
-    showTemperature: true,
-    width: "300px",
-    weatherImagePath: "/image/weather/",
-    temperatureRanges: [
-      { range: [-Infinity, 0], image: "/image/frog/chameleon_below0.png" },
-      { range: [0, 10], image: "/image/frog/chameleon_to10.png" },
-      { range: [10, 20], image: "/image/frog/chameleon_to20.png" },
-      { range: [20, 30], image: "/image/frog/chameleon_to30.png" },
-      { range: [30, Infinity], image: "/image/frog/chameleon_above30.png" }
-    ]
-  }
-}
+    units: "metric", // Units: metric or imperial
+    updateInterval: 5*60*1000, // Update interval in milliseconds (default: 5 minutes)
+		useWeatherMapping: true,
+		showTemperature: true,
+		width: "350px",
+		width_image: "150px",
+		temperatureRanges: [
+				    { range: [-Infinity, 0], image: "/image/frog/chameleon_below0.png" },
+				    { range: [0, 10], image: "/image/frog/chameleon_to10.png" },
+				    { range: [10, 20], image: "/image/frog/chameleon_to20.png" },
+				    { range: [20, 30], image: "/image/frog/chameleon_to30.png" },
+				    { range: [30, Infinity], image : "/image/frog/chameleon_above30.png" },
+	 			 ],
+		weatherImagePath: "/image/weather/",
+    language: "de", // Default language
+		},	
+},
 ```
 
 ## Configuration Options
