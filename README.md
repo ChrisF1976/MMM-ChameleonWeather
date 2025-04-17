@@ -24,14 +24,13 @@
 
 ```bash
 cd ~/MagicMirror/modules
-git clone https://github.com/yourusername/MMM-ChameleonWeather.git
-cd MMM-ChameleonWeather
+git clone https://github.com/ChrisF1976/MMM-ChameleonWeather.git
 ```
 
-Configuration
+## Configuration
 
 Add the module to your config.js file:
-
+```javascript
 {
   module: "MMM-ChameleonWeather",
   position: "top_center", // Or any position you prefer
@@ -53,3 +52,39 @@ Add the module to your config.js file:
     ]
   }
 }
+```
+
+## Configuration Options
+
+| Option               | Type     | Default                    | Description                                                                 |
+|----------------------|----------|----------------------------|-----------------------------------------------------------------------------|
+| `apiKey`             | string   | `""`                       | **Required**. Your [OpenWeatherMap](https://openweathermap.org/) API key.  |
+| `lat`                | string   | `""`                       | **Required**. Your latitude for weather data.                               |
+| `lon`                | string   | `""`                       | **Required**. Your longitude for weather data.                              |
+| `units`              | string   | `"metric"`                 | Unit system: `"metric"` or `"imperial"`.                                    |
+| `updateInterval`     | number   | `5 * 60 * 1000` (5 min)    | Update interval in milliseconds.                                            |
+| `showTemperature`    | boolean  | `true`                     | Whether to display the current temperature.                                 |
+| `width`              | string   | `"300px"`                  | Width of the module display.                                                |
+| `weatherImagePath`   | string   | `"/image/weather/"`        | Path to the folder containing weather overlay icons.                        |
+| `useWeatherMapping`  | boolean  | `true`                     | Enables weather-to-overlay mapping via weather `id` or `icon`.              |
+| `temperatureRanges`  | array    | See default below          | Maps temperature ranges to chameleon images.                                |
+
+### Example `temperatureRanges`
+
+```javascript
+temperatureRanges: [
+  { range: [-Infinity, 0], image: "/image/frog/chameleon_below0.png" },
+  { range: [0, 10], image: "/image/frog/chameleon_to10.png" },
+  { range: [10, 20], image: "/image/frog/chameleon_to20.png" },
+  { range: [20, 30], image: "/image/frog/chameleon_to30.png" },
+  { range: [30, Infinity], image: "/image/frog/chameleon_above30.png" }
+]
+```
+
+**Each object should define:**
+- range: A two-element array [minTemp, maxTemp].
+- image: Path to the image displayed for that temperature range.
+
+## License
+
+MIT © [ChrisF1976]
