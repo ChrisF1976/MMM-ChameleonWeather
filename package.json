@@ -1,0 +1,19 @@
+{
+  "name": "MMM-ChameleonWeather",
+  "version": "1.0.0",
+  "description": "A MagicMirror² module that displays a chameleon whose appearance changes based on temperature and weather conditions using OpenWeatherMap data.",
+  "main": "MMM-ChameleonWeather.js",
+  "author": "ChrisF1976",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChrisF1976/MMM-ChameleonWeather.git"
+  },
+  "dependencies": {},
+  "keywords": [
+    "weather",
+    "chameleon",
+    "temperature",
+    "openweathermap"
+  ]
+}
