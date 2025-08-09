@@ -19,16 +19,10 @@ module.exports = NodeHelper.create({
       const response = await axios.get(url);
       const data = response.data;
       
-      /*
-      console.log("Sending weather data:", {
-        temperature: data.main.temp,
-        weather: data.weather[0], // Sending the entire weather object
-      });
-      */
-
       this.sendSocketNotification("ChameleonWEATHER_DATA", {
         temperature: data.main.temp,
-        weather: data.weather, // Send full array of weather objects
+        weather: data.weather,
+        units: config.units // Send units to main module
       });
     } catch (error) {
       console.error("MMM-ChameleonWeather: Error fetching weather data:", error);
