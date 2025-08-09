@@ -81,23 +81,16 @@ Module.register("MMM-ChameleonWeather", {
       };
       wrapper.appendChild(overlay);
     }
-
-    // Temperature display
-    if (this.config.showTemperature && this.temperature !== null) {
-      const tempDiv = document.createElement("div");
-      tempDiv.className = "temperature-display";
-
-      // Format temperature with unit
-      const tempValue =
-        this.config.units === "imperial"
-          ? (this.temperature * 9) / 5 + 32 // Convert Celsius to Fahrenheit
-          : this.temperature;
-
-      tempDiv.textContent = `${tempValue.toFixed(1)}° ${
-        this.config.units === "imperial" ? "F" : "C"
-      }`;
-      wrapper.appendChild(tempDiv);
-    }
+//Temperature Display
+	if (this.config.showTemperature && this.temperature !== null) {
+ 	const tempDiv = document.createElement("div");
+	tempDiv.className = "temperature-display";
+  
+ 	tempDiv.textContent = `${this.temperature.toFixed(1)}°${
+   	this.config.units === "imperial" ? "F" : "C"
+ 	}`;
+  	wrapper.appendChild(tempDiv);
+	}
 
 // Weather whiner message
   const whinerElement = document.createElement("div");
