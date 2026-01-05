@@ -1,5 +1,4 @@
 const NodeHelper = require("node_helper");
-const axios = require("axios");
 
 module.exports = NodeHelper.create({
   start: function () {
@@ -16,16 +15,25 @@ module.exports = NodeHelper.create({
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${config.lat}&lon=${config.lon}&units=${config.units}&appid=${config.apiKey}`;
 
     try {
-      const response = await axios.get(url);
-      const data = response.data;
-      
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
       this.sendSocketNotification("ChameleonWEATHER_DATA", {
         temperature: data.main.temp,
         weather: data.weather,
-        units: config.units // Send units to main module
+        units: config.units
       });
     } catch (error) {
-      console.error("MMM-ChameleonWeather: Error fetching weather data:", error);
+      console.error(
+        "MMM-ChameleonWeather: Error fetching weather data:",
+        error
+      );
     }
-  },
+  }
 });
+
