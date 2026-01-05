@@ -27,6 +27,15 @@ cd ~/MagicMirror/modules
 git clone https://github.com/ChrisF1976/MMM-ChameleonWeather.git
 ```
 
+
+## Update
+
+```bash
+cd ~/MagicMirror/modules/MMM-ChameleonWeather
+git pull
+npm ci
+```
+
 ## Configuration
 
 Add the module to your config.js file:
