@@ -1,6 +1,6 @@
 Module.register("MMM-ChameleonWeather", {
   defaults: {
-    apiKey: "", // OpenWeatherMap API Key
+    apiKey: "", // OpenWeatherMap API Key (v3.0)
     lat: "", // Latitude
     lon: "", // Longitude
     units: "metric", // Units: metric or imperial
@@ -22,15 +22,14 @@ Module.register("MMM-ChameleonWeather", {
 
   start: function () {
     this.temperature = null;
-    this.imagePath = ""; // Current image path for the main image
-    // Set a default overlay image (this will be used if no valid weather image is found)
+    this.imagePath = "";
     this.weatherOverlayPath = `modules/MMM-ChameleonWeather${this.config.weatherImagePath}na.png`;
-    this.weatherWhinerText = ""; // Placeholder for weather whiner text
-    this.messages = {}; // Placeholder for weather messages
+    this.weatherWhinerText = "";
+    this.messages = {};
+    this.errorMessage = ""; // Add error message storage
     this.loadMessages();
     this.sendSocketNotification("FETCH_ChameleonWEATHER", this.config);
 
-    // Set up periodic updates
     setInterval(() => {
       this.sendSocketNotification("FETCH_ChameleonWEATHER", this.config);
     }, this.config.updateInterval);
@@ -44,7 +43,7 @@ Module.register("MMM-ChameleonWeather", {
         self.messages = data;
       })
       .catch((error) => {
-        // Optionally log error: console.error("Error loading weather messages:", error);
+        console.error("Error loading weather messages:", error);
       });
   },
 
@@ -55,19 +54,27 @@ Module.register("MMM-ChameleonWeather", {
   getDom: function () {
     const wrapper = document.createElement("div");
     wrapper.className = "chameleon-wrapper";
-
-    // Ensure the wrapper is centered
     wrapper.style.width = this.config.width;
     wrapper.style.margin = "0 auto";
 
+    // Show error if exists
+    if (this.errorMessage) {
+      const errorDiv = document.createElement("div");
+      errorDiv.className = "error-message";
+      errorDiv.textContent = this.errorMessage;
+      errorDiv.style.color = "red";
+      errorDiv.style.fontSize = "12px";
+      wrapper.appendChild(errorDiv);
+    }
+
     // Main chameleon image
-      const img = document.createElement("img");
-	  img.className = "chameleon-image";
-	  img.src = this.imagePath || "modules/MMM-ChameleonWeather/image/frog/default.png";
-	  img.style.width = this.config.width_image;  // Use the new property
-	  img.style.height = "auto";
-	  img.style.marginLeft = "auto"; // Aligns the image to the right within the module
-	  wrapper.appendChild(img);
+    const img = document.createElement("img");
+    img.className = "chameleon-image";
+    img.src = this.imagePath || "modules/MMM-ChameleonWeather/image/frog/default.png";
+    img.style.width = this.config.width_image;
+    img.style.height = "auto";
+    img.style.marginLeft = "auto";
+    wrapper.appendChild(img);
 
     // Weather overlay
     if (this.weatherOverlayPath) {
@@ -75,80 +82,79 @@ Module.register("MMM-ChameleonWeather", {
       overlay.className = "weather-overlay";
       overlay.src = this.weatherOverlayPath;
       overlay.style.display = "block";
-      // If the image fails to load (file not found), hide the overlay.
       overlay.onerror = function () {
         this.style.display = "none";
       };
       wrapper.appendChild(overlay);
     }
 
-    // Temperature display
+    // Temperature display - FIXED: No conversion needed
     if (this.config.showTemperature && this.temperature !== null) {
       const tempDiv = document.createElement("div");
       tempDiv.className = "temperature-display";
-
-      // Format temperature with unit
-      const tempValue =
-        this.config.units === "imperial"
-          ? (this.temperature * 9) / 5 + 32 // Convert Celsius to Fahrenheit
-          : this.temperature;
-
-      tempDiv.textContent = `${tempValue.toFixed(1)}° ${
-        this.config.units === "imperial" ? "F" : "C"
-      }`;
+      
+      // API v3.0 returns correct units, no conversion needed
+      const unitSymbol = this.config.units === "imperial" ? "F" : "C";
+      tempDiv.textContent = `${this.temperature.toFixed(1)}°${unitSymbol}`;
       wrapper.appendChild(tempDiv);
     }
 
-// Weather whiner message
-  const whinerElement = document.createElement("div");
-  whinerElement.className = "weather-whiner";
-  whinerElement.textContent = this.weatherWhinerText || "";
-  // Ensure maximum font size and single-line text
-  whinerElement.style.fontSize = "20px";
-  whinerElement.style.whiteSpace = "nowrap";
-  wrapper.appendChild(whinerElement);
+    // Weather whiner message
+    const whinerElement = document.createElement("div");
+    whinerElement.className = "weather-whiner";
+    whinerElement.textContent = this.weatherWhinerText || "";
+    whinerElement.style.fontSize = "20px";
+    whinerElement.style.whiteSpace = "nowrap";
+    wrapper.appendChild(whinerElement);
 
-  // Adjust the font size to fit within the module's width
-  // Use a timeout to ensure the element is rendered before measuring
-  setTimeout(() => {
-    let fontSize = 20;
-    // Reduce font size until the whiner text fits inside the module wrapper
-    while (whinerElement.scrollWidth > wrapper.clientWidth && fontSize > 5) {
-      fontSize--;
-      whinerElement.style.fontSize = fontSize + "px";
-    }
-  }, 0);
+    setTimeout(() => {
+      let fontSize = 20;
+      while (whinerElement.scrollWidth > wrapper.clientWidth && fontSize > 5) {
+        fontSize--;
+        whinerElement.style.fontSize = fontSize + "px";
+      }
+    }, 0);
 
     return wrapper;
   },
 
   socketNotificationReceived: function (notification, payload) {
     if (notification === "ChameleonWEATHER_DATA") {
+      this.errorMessage = ""; // Clear any previous errors
       if (payload && typeof payload.temperature !== "undefined") {
         this.temperature = payload.temperature;
+        this.config.units = payload.units || this.config.units; // Update units
         this.updateImage();
         this.updateWeatherOverlay(payload.weather);
 
-        // Select a random weather whiner message based on the condition
         const description = payload.weather[0]?.main || "Clear";
-        const whineList =
-          this.messages[description] ||
-          ["The weather is boring. Move somewhere else."];
-        const currentWhine =
-          whineList[Math.floor(Math.random() * whineList.length)];
+        const whineList = this.messages[description] || ["The weather is boring. Move somewhere else."];
+        const currentWhine = whineList[Math.floor(Math.random() * whineList.length)];
 
         this.weatherWhinerText = currentWhine;
-        this.updateDom(); // Refresh the DOM
+        this.updateDom();
       }
+    } else if (notification === "ChameleonWEATHER_ERROR") {
+      this.errorMessage = payload.message || "Error fetching weather data";
+      this.updateDom();
     }
   },
 
   updateImage: function () {
     if (this.temperature !== null) {
+      // IMPORTANT: Temperature ranges are in Celsius format
+      // If user uses imperial, we need to convert to Celsius for image selection
+      let tempForImage = this.temperature;
+      
+      if (this.config.units === "imperial") {
+        // Convert Fahrenheit to Celsius for image selection
+        tempForImage = (this.temperature - 32) * 5/9;
+      }
+      
       const rangeConfig = this.config.temperatureRanges.find(
         (rangeObj) =>
-          this.temperature >= rangeObj.range[0] &&
-          this.temperature < rangeObj.range[1]
+          tempForImage >= rangeObj.range[0] &&
+          tempForImage < rangeObj.range[1]
       );
 
       if (rangeConfig) {
@@ -159,41 +165,34 @@ Module.register("MMM-ChameleonWeather", {
     }
   },
 
-	 updateWeatherOverlay: function (weatherData) {
-	  const weatherPath = this.config.weatherImagePath;
-	  // Reset the overlay path
-	  this.weatherOverlayPath = "";
-	
-	  if (weatherData && Array.isArray(weatherData) && weatherData.length > 0) {
-	    const weather = weatherData[0];
-	
-	    let imageFile = "";
-	    // FIXED: Try weather.icon FIRST (01d.png, 01n.png, etc.) since you have those files
-	    if (weather.icon) {
-	      imageFile = `${weather.icon}.png`;
-	    }
-	    // Only try weather.id as fallback (800.png, 801.png, etc.) - you can remove this if you don't have these files
-	    else if (weather.id) {
-	      imageFile = `${weather.id}.png`;
-	    }
-	
-	    if (imageFile) {
-	      const testImage = new Image();
-	      testImage.onload = () => {
-	        // File exists, use it.
-	        this.weatherOverlayPath = `modules/MMM-ChameleonWeather${weatherPath}${imageFile}`;
-	        this.updateDom();
-	      };
-	      testImage.onerror = () => {
-	        // File doesn't exist, try using weather.icon if it's different.
-	        if (weather.icon && imageFile !== `${weather.icon}.png`) {
-	          this.weatherOverlayPath = `modules/MMM-ChameleonWeather${weatherPath}${weather.icon}.png`;
-	          this.updateDom();
-	        }
-	      };
-	      testImage.src = `modules/MMM-ChameleonWeather${weatherPath}${imageFile}`;
-	    }
-	  }
-	}
+  updateWeatherOverlay: function (weatherData) {
+    const weatherPath = this.config.weatherImagePath;
+    this.weatherOverlayPath = "";
 
+    if (weatherData && Array.isArray(weatherData) && weatherData.length > 0) {
+      const weather = weatherData[0];
+
+      let imageFile = "";
+      if (weather.icon) {
+        imageFile = `${weather.icon}.png`;
+      } else if (weather.id) {
+        imageFile = `${weather.id}.png`;
+      }
+
+      if (imageFile) {
+        const testImage = new Image();
+        testImage.onload = () => {
+          this.weatherOverlayPath = `modules/MMM-ChameleonWeather${weatherPath}${imageFile}`;
+          this.updateDom();
+        };
+        testImage.onerror = () => {
+          if (weather.icon && imageFile !== `${weather.icon}.png`) {
+            this.weatherOverlayPath = `modules/MMM-ChameleonWeather${weatherPath}${weather.icon}.png`;
+            this.updateDom();
+          }
+        };
+        testImage.src = `modules/MMM-ChameleonWeather${weatherPath}${imageFile}`;
+      }
+    }
+  }
 });
