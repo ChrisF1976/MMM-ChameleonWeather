@@ -12,28 +12,39 @@ module.exports = NodeHelper.create({
   },
 
   fetchWeather: async function (config) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${config.lat}&lon=${config.lon}&units=${config.units}&appid=${config.apiKey}`;
+    // Updated to OpenWeatherMap API 3.0
+    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${config.lat}&lon=${config.lon}&units=${config.units}&appid=${config.apiKey}&exclude=minutely,hourly,daily,alerts`;
 
     try {
       const response = await fetch(url);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        // Try to get error details
+        const errorText = await response.text();
+        throw new Error(`HTTP error! Status: ${response.status}, Details: ${errorText}`);
       }
 
       const data = await response.json();
 
-      this.sendSocketNotification("ChameleonWEATHER_DATA", {
-        temperature: data.main.temp,
-        weather: data.weather,
-        units: config.units
-      });
+      if (data && data.current) {
+        this.sendSocketNotification("ChameleonWEATHER_DATA", {
+          temperature: data.current.temp,
+          weather: data.current.weather,
+          units: config.units
+        });
+      } else {
+        throw new Error("Invalid API response structure");
+      }
     } catch (error) {
       console.error(
         "MMM-ChameleonWeather: Error fetching weather data:",
-        error
+        error.message
       );
+      
+      // Send error notification to main module
+      this.sendSocketNotification("ChameleonWEATHER_ERROR", {
+        message: error.message
+      });
     }
   }
 });
-
