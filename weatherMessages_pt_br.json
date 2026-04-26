@@ -1,0 +1,37 @@
+{
+    "Rain": [
+        "Chuva de novo? Alguém lá em cima precisa de um novo hobby.",
+        "Não esqueça seu guarda-chuva!",
+        "Chuva: A maneira da natureza dizer 'Dia de Netflix!'",
+        "Está molhado lá fora. Melhor ficar em casa.",
+        "Chuva, chuva, vá embora... mas talvez volte amanhã?"
+    ],
+    "Clear": [
+        "Céu ensolarado! Aproveite enquanto dura.",
+        "Dia perfeito para uma caminhada!",
+        "O sol está brilhando. Não esqueça o protetor solar!",
+        "Finalmente, um bom tempo. Hora de tomar sorvete!",
+        "Céu azul. Quem precisa de férias quando está assim?"
+    ],
+    "Clouds": [
+        "Nublado com chance de bocejos.",
+        "Cadê o sol? Tirando uma folga, eu acho.",
+        "Céu cinzento à frente, como seu humor de segunda-feira.",
+        "As nuvens vieram para ficar, aparentemente.",
+        "Parece que o sol entrou em greve."
+    ],
+    "Snow": [
+        "Batalha de bolas de neve chegando!",
+        "Neve: O inconveniente mais bonito.",
+        "Pegue sua pá e seu senso de humor.",
+        "Hora de um país das maravilhas de inverno!",
+        "Neve significa chocolate quente e cobertores, certo?"
+    ],
+    "Extreme": [
+        "Fique seguro lá fora, o clima está selvagem!",
+        "Alerta de clima extremo! Segure seus chapéus.",
+        "Parece que a Mãe Natureza está de mau humor.",
+        "Aperte os cintos, vai ser uma viagem turbulenta.",
+        "Clima extremo: desculpa perfeita para ficar em casa."
+    ]
+}
